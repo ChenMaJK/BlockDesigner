@@ -1,0 +1,9 @@
+.test{
+    display: flex;
+    transition: 1s;
+    resize: both;
+    overflow: scroll;
+}
+.input::placeholder {
+    color: red;
+}
