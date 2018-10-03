@@ -97,12 +97,16 @@ module.exports = {
 		new OpenBrowserPlugin({
 			url: 'http://localhost:9090/webpack-dev-server/'
 		}),
-		new BundleAnalyzerPlugin(),
+		// new BundleAnalyzerPlugin(),
 	],
 	resolve: {
 		alias: {
-			BLOCK: path.resolve(__dirname, '../src/Blcok/'),
-			VIEW: path.resolve(__dirname, '../src/VIEW/')
+			Base: path.resolve(__dirname, '../src/Components/Base/'),
+			HOC: path.resolve(__dirname, '../src/Components/HOC/'),
+			Icon: path.resolve(__dirname, '../src/Components/Icon/'),
+			Unity: path.resolve(__dirname, '../src/Components/Unity/'),
+			Layout: path.resolve(__dirname, '../src/Components/Layout/'),
+			View: path.resolve(__dirname, '../src/View/')
 		},
 		extensions: [ '.js', '.json', '.png' ]
 	},

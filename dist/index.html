@@ -1,14 +1,51 @@
 <!DOCTYPE html>
+
+
 <html lang="en">
+
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Block Designer</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Block Designer</title>
+
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+		}
+		body * {
+			margin: 0.4em;
+			box-sizing: border-box;
+			border: 4px solid rgb(0, 0, 0);
+
+			background: #cccccc;
+		}
+
+		body * * {
+			background: #979797;
+		}
+
+		body * * * {
+			background: #cccccc;
+		}
+
+		body * * * * {
+			background: #979797;
+		}
+
+		body * * * * * {
+			background: #cccccc;
+		}
+	</style>
 </head>
+
 <body>
-    <div id="app">正在加载</div>
-    <script src="./index.bundle.js"></script>
-    <script src="./vendors.bundle.js"></script>
+	<div id="app">正在加载</div>
+
+	<script src="./index.bundle.js"></script>
+	<script src="./vendors.bundle.js"></script>
 </body>
+
 </html>
