@@ -12,7 +12,12 @@ for find all the components of React , and create them !
  * dist——目标文件 
  * src——源文件
    * VIEW——页面
-   * BLOCK——组件（积木）
+   * Components——组件（积木）
+     * Base 不含组件的组件
+     * Unity 含组件的组件
+     * Layout 模板布局
+     * Icon 图标
+     * HOC 拓展组件
    * index.js——入口js
    * index.less——入口js的less
 
