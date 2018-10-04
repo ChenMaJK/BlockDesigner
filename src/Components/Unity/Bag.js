@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Flex from 'Layout/Flex';
+import Flex from 'Base/Flex';
 
 /**
  * 组件库 组件

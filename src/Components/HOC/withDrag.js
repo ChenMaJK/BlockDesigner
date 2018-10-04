@@ -3,14 +3,14 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 // 拖动
-const withCopyDrag = (WrappedComponent) => {
+// TODO: 多层if嵌套的解耦 策略模式
+const withDrag = (WrappedComponent) => {
 	class HocComponent extends React.Component {
 		constructor(props) {
 			super(props);
-			console.log(WrappedComponent);
 			this.isCanDrag = false;
 			this.state = {
-				$copy: null
+				$copy: null,
 			};
 		}
 		// TODO:更好的注释
@@ -25,8 +25,8 @@ const withCopyDrag = (WrappedComponent) => {
 			let mousemove = document.addEventListener('mousemove', this.handleMouseMove);
 			// 设置鼠标放开事件
 			document.addEventListener('mouseup', (e) => {
-                // 设置不可拖拽，并移除鼠标移动事件，鼠标放开事件，判断是否为内容区中的元素，依次判断是否放下此复制体
-                console.log(e)
+				// 设置不可拖拽，并移除鼠标移动事件，鼠标放开事件，判断是否为内容区中的元素，依次判断是否放下此复制体
+				console.log(e)
 				that.setDrag(false);
 				document.removeEventListener('mousemove', this.handleMouseMove);
 				document.removeEventListener('mouseup', this.handleMouseMove);
@@ -37,44 +37,60 @@ const withCopyDrag = (WrappedComponent) => {
 			// TODO:更好的拖拽方式
 			// 拖拽复制件this.$copy
 			if (this.isCanDrag) {
-				let $copy = ReactDOM.findDOMNode(this.$copy);
-				$copy.style.left = e.pageX - $copy.offsetWidth / 2 + 'px';
-				$copy.style.top = e.pageY - $copy.offsetHeight / 2 + 'px';
+				let $drag = null;
+				if (this.props.isCopy) {
+					$drag  = ReactDOM.findDOMNode(this.$copy);
+				} else {
+					$drag  = ReactDOM.findDOMNode(this.$drag); 
+				}
+				let x = e.pageX - $drag.offsetLeft;
+				let y = e.pageY - $drag.offsetTop;
+				$drag.style.transform = `translate(${x}px,${y}px)`;
 			}
+		};
+		handleMouseUp = (e) => {
+			
 		};
 		// 设置或清除 可拖拽以及复制件
 		setDrag = (flag) => {
 			if (flag) {
 				// 设置
-				let $copy = (
-					<WrappedComponent
-						{...this.props}
-						onMouseMove={this.handleMouseMove}
-						ref={(copy) => {
-							this.$copy = copy;
-						}}
-						style={{
-							position: 'absolute',
-							userSelect: 'none'
-						}}
-					/>
-				);
+				if(this.props.isCopy){
+					let $copy = (
+						<WrappedComponent
+							{...this.props}
+							onMouseMove={this.handleMouseMove}
+							ref={(copy) => {
+								this.$copy = copy;
+							}}
+							style={{
+								position: 'absolute',
+								userSelect: 'none'
+							}}
+						/>
+					);
+					this.setState({
+						$copy: $copy
+					});
+				}
+
 				this.isCanDrag = true;
-				this.setState({
-					$copy: $copy
-				});
 			} else {
 				// 清除
 				this.isCanDrag = false;
-				this.setState({
-					$copy: null
-				});
+				if (this.props.isCopy) {
+					REF_CACHE.$desk.addBlock("1", this.$copy);
+					this.setState({
+						$copy: null
+					});
+				}
 			}
 		};
 		render() {
 			return (
 				<React.Fragment>
 					<WrappedComponent
+						ref={(drag)=>{this.$drag = drag}}
 						onMouseDown={this.handleMouseDown}
 						{...this.props}
 						style={{

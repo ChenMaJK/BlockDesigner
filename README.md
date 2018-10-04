@@ -26,4 +26,4 @@ for find all the components of React , and create them !
 # json
 描述组件结构及页面关系，用来生成React代码
  * 组件 json
- * 页面 json
+  

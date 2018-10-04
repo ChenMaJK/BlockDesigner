@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import less from './index.less';
 
-import Flex from 'Layout/Flex';
+import Flex from 'Base/Flex';
 import Header from 'Layout/Header';
 import Body from 'Layout/Body';
 
-import Bag from 'Base/Bag';
+import Bag from 'Unity/Bag';
+import Desk from 'Unity/Desk';
 import Div from 'Base/Div';
-import withCopyDrag from 'HOC/withCopyDrag';
+import withDrag from 'HOC/withDrag';
 
-const DivWithDrag = withCopyDrag(Div);
+const DivWithDrag = withDrag(Div);
 // TODO: 可读性不好，需要思考
 export default class Index extends Component {
 	render() {
@@ -32,7 +33,7 @@ export default class Index extends Component {
 				<Flex flow="row nowrap" align="strech">
 					{/* left */}
 					<Flex flow="column nowrap" align="strech" style={{ flex: '0 0 18%' }}>
-						<Bag name="Icon组件" $blocks={<DivWithDrag>12223</DivWithDrag>} />
+						<Bag name="Icon组件" $blocks={<DivWithDrag isCopy="1">12223</DivWithDrag>} />
 						<Bag name="基础组件" />
 						<Bag name="高阶组件" />
 						<Bag name="组合组件" />
@@ -51,7 +52,11 @@ export default class Index extends Component {
 							<div style={{ whiteSpace: 'nowrap' }}>预览</div>
 						</Flex>
 						<Flex flow="column nowrap" style={{ flex: '1 1' }}>
-							123
+							<Desk
+								ref={(desk) => {
+									REF_CACHE.$desk = desk;
+								}}
+							/>
 						</Flex>
 					</Flex>
 				</Flex>
