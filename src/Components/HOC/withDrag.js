@@ -24,13 +24,7 @@ const withDrag = (WrappedComponent) => {
 			// 设置鼠标移动事件
 			let mousemove = document.addEventListener('mousemove', this.handleMouseMove);
 			// 设置鼠标放开事件
-			document.addEventListener('mouseup', (e) => {
-				// 设置不可拖拽，并移除鼠标移动事件，鼠标放开事件，判断是否为内容区中的元素，依次判断是否放下此复制体
-				console.log(e)
-				that.setDrag(false);
-				document.removeEventListener('mousemove', this.handleMouseMove);
-				document.removeEventListener('mouseup', this.handleMouseMove);
-			});
+			let mouseup = document.addEventListener('mouseup', this.handleMouseUp);
 			e.preventDefault();
 		};
 		handleMouseMove = (e) => {
@@ -43,13 +37,22 @@ const withDrag = (WrappedComponent) => {
 				} else {
 					$drag  = ReactDOM.findDOMNode(this.$drag); 
 				}
-				let x = e.pageX - $drag.offsetLeft;
-				let y = e.pageY - $drag.offsetTop;
+				let x =1+ e.pageX - $drag.offsetLeft;
+				let y =1+ e.pageY - $drag.offsetTop;
 				$drag.style.transform = `translate(${x}px,${y}px)`;
 			}
 		};
 		handleMouseUp = (e) => {
-			
+			// 设置不可拖拽，并移除鼠标移动事件，鼠标放开事件，判断是否为内容区中的元素，依次判断是否放下此复制体
+			console.log(e)
+			this.setDrag(false);
+			console.log(e.path[0].getAttribute("vid"))
+			// TODO: 这里解耦，不写死
+			let path = e.path[0].getAttribute("vid");
+			let blockJson = { name: "eee" }
+			REF_CACHE.$desk.addBlock(path, blockJson) //TODO: 这里提供一个类似QT发送信号的机制来通信
+			document.removeEventListener('mousemove', this.handleMouseMove);
+			document.removeEventListener('mouseup', this.handleMouseUp);
 		};
 		// 设置或清除 可拖拽以及复制件
 		setDrag = (flag) => {
@@ -79,7 +82,6 @@ const withDrag = (WrappedComponent) => {
 				// 清除
 				this.isCanDrag = false;
 				if (this.props.isCopy) {
-					REF_CACHE.$desk.addBlock("1", this.$copy);
 					this.setState({
 						$copy: null
 					});
