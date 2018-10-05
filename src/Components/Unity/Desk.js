@@ -4,13 +4,13 @@ export default class Desk extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			blockJson: [{ id: "0", name: 'test', children: [{ id: "00", name: 'test2', children: [] }] }, { id: "1", name: 'test3', children: []}]
+			blockJson: { id: "0", name: 'test', children: [{ id: "00", name: 'test2', children: [] }, { id: "01", name: 'test3', children: [] }] }
 		};
 	}
 	// _pos = 12 为根元素下第1个元素的第2个元素
 	addBlock = (_pos, _blockJson) => {
 		let blockJson = this.state.blockJson;
-		let currentBlockJson = blockJson[_pos.charAt(0)] ;
+		let currentBlockJson = blockJson ;
 		for (let i = 1; i < _pos.length; i++) { 
 			currentBlockJson = currentBlockJson.children[_pos.charAt(i)];
 			
